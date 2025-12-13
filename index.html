@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://rawcdn.githack.com/AR-js-org/AR.js/3.4.2/aframe/build/aframe-ar.js"></script>
-    <style>
-      body { margin: 0; overflow: hidden; }
-    </style>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-  <body>
-    <div id="status"
-      style="position:fixed;top:0;left:0;z-index:9999;
-      background:black;color:white;padding:8px;">
-      未検出
-    </div>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://rawcdn.githack.com/AR-js-org/AR.js/3.4.2/aframe/build/aframe-ar.js"></script>
 
-    <a-scene embedded arjs="debugUIEnabled: true;">
-      <a-marker preset="hiro" id="hiro">
-        <a-box position="0 0.5 0" color="red"></a-box>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
+  <style>
+    body { margin: 0; overflow: hidden; }
+  </style>
+</head>
 
-    <script>
-      window.addEventListener("load", () => {
-        const marker = document.querySelector("#hiro");
-        const status = document.querySelector("#status");
+<body>
+  <div id="status"
+    style="position:fixed;top:0;left:0;z-index:9999;
+    background:black;color:white;padding:8px;">
+    未検出
+  </div>
 
-        marker.addEventListener("markerFound", () => {
-          status.textContent = "✅ 検出中";
-        });
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    arjs="sourceType: webcam; debugUIEnabled: true; trackingMethod: best;"
+  >
+    <a-marker preset="hiro" id="hiro">
+      <a-box position="0 0.5 0" color="red"></a-box>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
 
-        marker.addEventListener("markerLost", () => {
-          status.textContent = "❌ 未検出";
-        });
-      });
-    </script>
-  </body>
+  <script>
+    const marker = document.querySelector("#hiro");
+    const status = document.querySelector("#status");
+
+    marker.addEventListener("markerFound", () => {
+      status.textContent = "✅ 検出中";
+    });
+
+    marker.addEventListener("markerLost", () => {
+      status.textContent = "❌ 未検出";
+    });
+  </script>
+</body>
 </html>

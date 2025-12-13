@@ -23,11 +23,31 @@
       vr-mode-ui="enabled: false"
       arjs="trackingMethod: best; sourceType: webcam;"
     >
-      <a-marker type="pattern" url="pattern-Hiro_marker.patt">
-        <a-box position="0 0.5 0" color="gray"></a-box>
-      </a-marker>
+    <a-marker
+  type="pattern"
+  url="pattern-Hiro_marker.patt"
+  id="hiro"
+>
+  <a-box color="red"></a-box>
+</a-marker>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const marker = document.querySelector("#hiro");
+
+    marker.addEventListener("markerFound", () => {
+      console.log("✅ マーカー認識！");
+    });
+
+    marker.addEventListener("markerLost", () => {
+      console.log("❌ マーカー消失");
+    });
+  });
+</script>
+
 
       <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>
+

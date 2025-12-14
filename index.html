@@ -24,12 +24,17 @@
       vr-mode-ui="enabled: false"
       arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
     >
+          <!--ここで表示したい3Dオブジェクトのファイルを指定-->
+    <a-assets>
+      <a-asset-item id="model" src="taguti.glb"></a-asset-item>
+    </a-assets>
       <!-- preset="hiro"を使用してAR.js組み込みのHiroマーカーを使用 -->
-      <a-marker preset="hiro">
-        <a-box position="0 0.5 0" material="color: #4CC3D9" scale="1 1 1"></a-box>
-      </a-marker>
+      <a-marker preset="hiro"></a-marker>
 
-      <a-entity camera></a-entity>
+          <a-entity gltf-model="#model" play-all-model-animations="" position="-0.55 0 -0.5" rotation="0 140 -10" scale="4 4 4" visible="true">
+      </a-entity>
     </a-scene>
+    
   </body>
 </html>
+

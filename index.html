@@ -1,46 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script src="https://rawcdn.githack.com/AR-js-org/AR.js/3.4.2/aframe/build/aframe-ar.js"></script>
+    <!-- A-Frame 最新安定版 -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-  <style>
-    body { margin: 0; overflow: hidden; }
-  </style>
-</head>
+    <!-- AR.js 安定版 -->
+    <script src="https://rawcdn.githack.com/AR-js-org/AR.js/3.4.2/aframe/build/aframe-ar-nft.js"></script>
 
-<body>
-  <div id="status"
-    style="position:fixed;top:0;left:0;z-index:9999;
-    background:black;color:white;padding:8px;">
-    未検出
-  </div>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
 
-  <a-scene
-    embedded
-    vr-mode-ui="enabled: false"
-    arjs="sourceType: webcam; debugUIEnabled: true; trackingMethod: best;"
-  >
-    <a-marker preset="hiro" id="hiro">
-      <a-box position="0 0.5 0" color="red"></a-box>
-    </a-marker>
-    <a-entity camera></a-entity>
-  </a-scene>
+  <body>
+    <a-scene
+      embedded
+      vr-mode-ui="enabled: false"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- preset="hiro"を使用してAR.js組み込みのHiroマーカーを使用 -->
+      <a-marker preset="hiro">
+        <a-box position="0 0.5 0" material="color: #4CC3D9" scale="1 1 1"></a-box>
+      </a-marker>
 
-  <script>
-    const marker = document.querySelector("#hiro");
-    const status = document.querySelector("#status");
-
-    marker.addEventListener("markerFound", () => {
-      status.textContent = "✅ 検出中";
-    });
-
-    marker.addEventListener("markerLost", () => {
-      status.textContent = "❌ 未検出";
-    });
-  </script>
-</body>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
 </html>

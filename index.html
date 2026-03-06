@@ -1,128 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
+  <title>AR.js Hiro Marker</title>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex.js"></script>
-
+  <!-- AR.js -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
 
 <body style="margin:0; overflow:hidden;">
-<script>
+  <a-scene embedded arjs>
+    
+    <!-- Hiro マーカー -->
+    <a-marker preset="hiro">
+      
+      <!-- 表示する3Dオブジェクト -->
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
 
-let scene = new THREE.Scene();
-let camera = new THREE.Camera();
-scene.add(camera);
+    </a-marker>
 
-let renderer = new THREE.WebGLRenderer({
-    antialias:true,
-    alpha:true
-});
+    <!-- カメラ -->
+    <a-entity camera></a-entity>
 
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.domElement.style.position = 'absolute';
-renderer.domElement.style.top = '0px';
-renderer.domElement.style.left = '0px';
-
-document.body.appendChild(renderer.domElement);
-
-
-/* カメラ */
-
-let source = new THREEx.ArToolkitSource({
-    sourceType : 'webcam'
-});
-
-source.init(function(){
-    setTimeout(onResize, 200);
-});
-
-function onResize(){
-    source.onResizeElement();
-    source.copyElementSizeTo(renderer.domElement);
-
-    if(arToolkitContext.arController !== null){
-        source.copyElementSizeTo(arToolkitContext.arController.canvas);
-    }
-}
-
-window.addEventListener('resize', onResize);
-
-
-/* AR context */
-
-let arToolkitContext = new THREEx.ArToolkitContext({
-    cameraParametersUrl:
-    'https://raw.githubusercontent.com/AR-js-org/AR.js/master/three.js/data/camera_para.dat',
-    detectionMode: 'mono'
-});
-
-arToolkitContext.init(function(){
-    camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-});
-
-
-/* marker */
-
-let markerRoot = new THREE.Group();
-scene.add(markerRoot);
-
-new THREEx.ArMarkerControls(arToolkitContext, markerRoot,{
-    type:'pattern',
-    patternUrl: pattern-marker.png
-});
-
-
-/* デバッグ用ボックス */
-
-let geometry = new THREE.BoxGeometry(1,1,1);
-let material = new THREE.MeshNormalMaterial();
-let cube = new THREE.Mesh(geometry, material);
-
-cube.position.y = 0.5;
-
-markerRoot.add(cube);
-
-
-/* GLB */
-
-let loader = new THREE.GLTFLoader();
-
-loader.load("無題.glb", function(gltf){
-
-    let model = gltf.scene;
-
-    model.scale.set(10,10,10);
-
-    markerRoot.add(model);
-
-});
-
-
-/* render */
-
-function animate(){
-
-    requestAnimationFrame(animate);
-
-    if(source.ready !== false){
-        arToolkitContext.update(source.domElement);
-    }
-
-    renderer.render(scene, camera);
-
-}
-
-animate();
-
-</script>
+  </a-scene>
 </body>
 </html>
-
 
 
 

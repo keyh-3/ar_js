@@ -22,6 +22,14 @@
       <!-- 表示する3Dオブジェクト -->
  <a-entity gltf-model="#tiger" rotation="270 0 0"></a-entity>
     </a-marker>
+        <a-marker preset="kanji">
+      
+                  <a-entity mmd="">
+            <a-entity rotation="-90 0 0" position="0 0.5 0.5" scale="0.1 0.1 0.1"
+				mmd-model="model:./Alicia/MMD/Alicia_solid.pmx; vmd:./Alicia/MMDMotion/31.vmd; physics:false; blink:true;"></a-entity> <!-- vmd:./MMDMotion/31.vmd; -->
+		</a-entity>
+    </a-marker>
+    
 
     <!-- カメラ -->
     <a-entity camera></a-entity>

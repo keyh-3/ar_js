@@ -1,75 +1,104 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title>AR.js</title>
+    <meta charset="utf-8">
 
-  <!-- A-Frame 
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/aframe-mmd@1.1.0/dist/aframe-mmd.min.js"></script>
-	    <script src="https://cdn.rawgit.com/kripken/ammo.js/dcab07bf0e7f2b4b64c01dc45da846344c8f50be/builds/ammo.js"></script>
-    <script src="https://cdn.rawgit.com/takahirox/aframe-outline/v1.1.1/build/aframe-outline.min.js"></script>
-    <script src="https://cdn.rawgit.com/takahirox/a-mmd/v1.0.3/build/a-mmd.min.js"></script> -->
-
-	<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-
-<script src="https://cdn.rawgit.com/takahirox/a-mmd/v1.0.3/build/a-mmd.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
-<body style="margin:0; overflow:hidden;">
-  <a-scene embedded arjs>
-    <a-assets>
-  <a-asset-item id="tiger" src="murata.glb"></a-asset-item>
-		<a-asset-item id="lol" src="ar_dancing_teto.glb"></a-asset-item>
-</a-assets>
-    <!-- Hiro マーカー -->
-    <a-marker preset="kanji">
-      
-      <!-- 表示する3Dオブジェクト -->
- <a-entity gltf-model="#tiger" rotation="270 0 0" auto-rotate></a-entity>
-    </a-marker>
-        <a-marker preset="hiro">
-      
-                
-<a-entity gltf-model=#lol rotation="270 180 180" position="0 0 1.5" scale="0.05 0.05 0.05" animation-mixer></a-entity>
-    </a-marker>
-<!--     vmd:./Alicia/MMDMotion/31.vmd; physics:false; blink:true; -->
+<body>
 
-    <!-- カメラ -->
+<a-scene
+    embedded
+    arjs="sourceType: webcam;">
+
+    <a-assets>
+
+        <a-asset-item id="dragon" src="dragon.glb"></a-asset-item>
+        <a-asset-item id="robot" src="robot.glb"></a-asset-item>
+        <a-asset-item id="cat" src="cat.glb"></a-asset-item>
+        <a-asset-item id="ufo" src="ufo.glb"></a-asset-item>
+        <a-asset-item id="dinosaur" src="dinosaur.glb"></a-asset-item>
+
+    </a-assets>
+
+    <a-marker
+        id="marker"
+        preset="hiro">
+
+        <a-entity
+            id="displayModel"
+            position="0 0 0"
+            scale="0.1 0.1 0.1">
+        </a-entity>
+
+    </a-marker>
+
     <a-entity camera></a-entity>
-<a-light type="ambient" intensity="3"></a-light>
-<a-light type="directional" position="1 1 1" intensity="1"></a-light>
-  </a-scene>
+
+</a-scene>
+
+<script>
+
+const modelList = [
+    "#dragon",
+    "#robot",
+    "#cat",
+    "#ufo",
+    "#dinosaur"
+];
+
+const marker = document.querySelector("#marker");
+const displayModel = document.querySelector("#displayModel");
+
+let wasVisible = false;
+
+marker.addEventListener("markerFound", () => {
+
+    if(wasVisible) return;
+
+    wasVisible = true;
+
+    const randomIndex =
+        Math.floor(Math.random() * modelList.length);
+
+    const selectedModel =
+        modelList[randomIndex];
+
+    displayModel.setAttribute(
+        "gltf-model",
+        selectedModel
+    );
+
+    displayModel.setAttribute(
+        "rotation",
+        `0 ${Math.floor(Math.random()*360)} 0`
+    );
+
+    console.log(
+        "出現:",
+        selectedModel
+    );
+
+});
+
+marker.addEventListener("markerLost", () => {
+
+    wasVisible = false;
+
+});
+
+</script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

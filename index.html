@@ -6,6 +6,8 @@
 
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
     <style>
@@ -25,10 +27,14 @@
     <a-assets>
 
         <a-asset-item id="murata" src="murata.glb"></a-asset-item>
+
         <a-asset-item id="teto" src="ar_dancing_teto.glb"></a-asset-item>
+
         <a-asset-item id="cat" src="oiiaioooooiai_cat.glb"></a-asset-item>
+
         <a-asset-item id="spear" src="longuinus.glb"></a-asset-item>
-        <a-asset-item id="harhiroku" src="Hachiroku.glb"></a-asset-item>
+
+        <a-asset-item id="hachiroku" src="Hachiroku.glb"></a-asset-item>
 
     </a-assets>
 
@@ -38,6 +44,7 @@
 
         <a-entity
             id="displayModel"
+            animation-mixer
             position="0 0 0"
             scale="0.1 0.1 0.1">
         </a-entity>
@@ -65,7 +72,7 @@ let wasVisible = false;
 
 marker.addEventListener("markerFound", () => {
 
-    if(wasVisible) return;
+    if (wasVisible) return;
 
     wasVisible = true;
 
@@ -75,20 +82,26 @@ marker.addEventListener("markerFound", () => {
     const selectedModel =
         modelList[randomIndex];
 
-    displayModel.setAttribute(
-        "gltf-model",
-        selectedModel
-    );
+    displayModel.removeAttribute("gltf-model");
 
-    displayModel.setAttribute(
-        "rotation",
-        `0 ${Math.floor(Math.random()*360)} 0`
-    );
+    setTimeout(() => {
 
-    console.log(
-        "出現:",
-        selectedModel
-    );
+        displayModel.setAttribute(
+            "gltf-model",
+            selectedModel
+        );
+
+        displayModel.setAttribute(
+            "rotation",
+            `0 ${Math.floor(Math.random() * 360)} 0`
+        );
+
+        console.log(
+            "出現:",
+            selectedModel
+        );
+
+    }, 50);
 
 });
 
@@ -101,4 +114,5 @@ marker.addEventListener("markerLost", () => {
 </script>
 
 </body>
+
 </html>
